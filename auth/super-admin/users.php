@@ -23,44 +23,59 @@ if ($_SESSION['userType'] != 'SUPER-ADMIN') {
 if (isset($_POST['btn-addUser'])) {
 
 
-    //echo "<script>swal('Error!', '$msg', 'error');</script>";
 
 
+    $user_id = '';
     $email = '';
     $password = '';
     $userType = '';
-    $user_id = '';
+    $roleid = '';
     $msg = '';
     //verify the input
     $user_id = input_varify($_POST['userid']);
     $email = input_varify($_POST['email']);
     $password = input_varify($_POST['password']);
     $userType = input_varify($_POST['userType']);
-    
-    //check if the email is already in the database
-    if (empty($_POST['userid']) || empty($_POST['email']) || empty($_POST['password']) || empty($_POST['userType'])) {
-        $msg .= 'All field to be requred';
-    } elseif (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
-        $msg .= 'Invalid email address';
-    } elseif ($_POST['password'] != $_POST['confirmPassword']) {
-        $msg .= 'Password does not match';
+
+
+    switch ($userType) {
+        case 'SUPER-ADMIN':
+            $roleid = 3;
+            break;
+        case 'ADMIN':
+            $roleid = 0;
+            break;
+        case 'MANAGER':
+            $roleid = 1;
+            break;
+        case 'PUMPER':
+            $roleid = 4;
+            break;
     }
-} else {
 
+    //check if the email is already in the database
 
-    $query1 = "SELECT * FROM user WHERE email = {$user_id} LIMIT 1";
-
-    $ShowResult = mysqli_query($connection, $query1);
+    $query = "SELECT * FROM user WHERE email = '{$email}' LIMIT 1";
+    $ShowResult = mysqli_query($connection, $query);
+    $data = mysqli_fetch_array($ShowResult);
     if ($ShowResult) {
         if (mysqli_num_rows($ShowResult) == 1) {
+            $msg .= 'Email already exist ';
 
-            $msg = 'User already exist';
-        } else {
-            $msg = 'User already done';
         }
-
-
+    } else {
+        $msg .= 'Database query failed';
     }
+
+
+
+
+
+
+
+
+
+
 
 }
 function input_varify($data)
@@ -181,19 +196,19 @@ function input_varify($data)
                                                 <?php // echo $msg ?>
                                             </div>
                                             <div class="card-body">
-                                                <form action="users.php" method="post">
+                                                <form action="users.php" method="POST">
                                                     <div class="row">
                                                         <div class="mb-3 ">
                                                             <label class="form-label" for="inputUserid">User id</label>
                                                             <input type="text" class="form-control" name="userid"
-                                                                   id="inputUserid" placeholder="user id">
+                                                                   id="inputUserid" placeholder="user id" required>
                                                         </div>
 
                                                     </div>
                                                     <div class="mb-3">
                                                         <label class="form-label" for="inputEmail4">Email</label>
                                                         <input type="email" class="form-control" name="email"
-                                                               id="inputEmail4" placeholder="Email">
+                                                               id="inputEmail4" placeholder="Email" required>
                                                     </div>
                                                     <div class="mb-3">
 
@@ -208,14 +223,14 @@ function input_varify($data)
                                                     <div class="mb-3">
                                                         <label class="form-label" for="inputPassword">Password</label>
                                                         <input type="password" class="form-control" name="password"
-                                                               id="inputPassword" placeholder="Password">
+                                                               id="inputPassword" placeholder="Password" required>
                                                     </div>
                                                     <div class="mb-3">
                                                         <label class="form-label"
                                                                for="inputconfirmPassword">Re-Password</label>
                                                         <input type="password" class="form-control"
                                                                name="confirmPassword" id="inputconfirmPassword"
-                                                               placeholder="Password">
+                                                               placeholder="Password" required>
                                                     </div>
                                                     <button type="submit" name="btn-addUser" class="btn btn-primary">Add
                                                         User

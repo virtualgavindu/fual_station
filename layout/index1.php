@@ -1,18 +1,19 @@
 <?php
 
-include_once ('../res/link.php');
+include '../config/conn.php';
 
 
-$query1 = "SELECT * FROM user WHERE email = 'admingavindu@gmail.com' AND  pwd = 'admingavindu@gmail.com' LIMIT 1";
+$user_id = '5';
+$email = 'manager5@gmail.com';
+$password = 'manager5@gmail.com';
+$userType = 'manager';
+$roleid = '1';
+$msg = '';
 
-$connection = mysqli_connect('localhost', 'root', '', 'fual_station');
-$ShowResult = mysqli_query($connection, $query1);
-$data= mysqli_fetch_assoc($ShowResult);
-$data['user_id'];
-echo $data['user_id'];
-
-
-
-
-
-?>
+$query = "INSERT INTO user (user_id,email,pwd,roleid) VALUES ('{$user_id}','{$email}','{$password}','{$roleid}')";
+$ShowResult = mysqli_query($connection, $query);
+if ($ShowResult) {
+    $msg .= 'User added successfully';
+} else {
+    $msg .= 'User not added';
+}
