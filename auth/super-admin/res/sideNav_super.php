@@ -2,7 +2,7 @@
 <nav id="sidebar" class="sidebar js-sidebar">
         <div class="sidebar-content js-simplebar">
           <a class="sidebar-brand" href="#">
-            <span class="align-middle">Admin Dashbord</span>
+            <span class="align-middle"> Super Dashbord</span>
           </a>
 
           <ul class="sidebar-nav">
@@ -13,38 +13,33 @@
             
             ?>
 
-              <a class="sidebar-link" href="../admin/admin_dashboard.php?page=dashbord">
+              <a class="sidebar-link" href="#">
                 <i class="align-middle" data-feather="sliders"></i>
                 <span class="align-middle">Dashboard</span>
               </a>
               
             </li>
 
+            
+            
             <li class="sidebar-item">
-              <a class="sidebar-link" href="../admin/admin_dashboard.php?page=profile">
+              <a class="sidebar-link" href="#">
+                <i class="align-middle" data-feather="zap"></i>
+                <span class="align-middle">Filling station</span>
+              </a>
+            </li>
+
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="../super-admin/users.php">
                 <i class="align-middle" data-feather="user"></i>
                 <span class="align-middle">Users</span>
               </a>
             </li>
 
             <li class="sidebar-item">
-              <a class="sidebar-link" href="../admin/blank_page.php?page=blank">
-                <i class="align-middle" data-feather="user-plus"></i>
-                <span class="align-middle">Add Users</span>
-              </a>
-            </li>
-
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="../admin/blank_page.php?content=a">
-                <i class="align-middle" data-feather="user-plus"></i>
-                <span class="align-middle">Sign Up</span>
-              </a>
-            </li>
-
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="../admin/blank_page.php">
-                <i class="align-middle" data-feather="book"></i>
-                <span class="align-middle">Blank</span>
+              <a class="sidebar-link" href="../super-admin_dashboard.php?page=chat">
+                <i class="align-middle" data-feather="message-square"></i>
+                <span class="align-middle">Chat</span>
               </a>
             </li>
             <li class="sidebar-item">

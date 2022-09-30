@@ -29,6 +29,7 @@ if (isset($_POST['btn-login'])) {
         if ($ShowResult) {
             if (mysqli_num_rows($ShowResult) == 1) {
                 $user_id = $data['user_id'];
+                $_SESSION['id'] = $user_id;
 
                 $query2 = "SELECT user.user_id,permission.roletype FROM user INNER JOIN permission ON user.roleid=permission.roleid where user_id='{$user_id}'";
 
@@ -36,7 +37,7 @@ if (isset($_POST['btn-login'])) {
                 $userType = $data['roletype'];
 
                 //update last login record
-                $query3 = "UPDATE  login_record SET last_logins = now() WHERE user_id = '{$user_id}' LIMIT 1";
+                $query3 = "UPDATE  login_record SET last_login = now() WHERE user_id = '{$user_id}' LIMIT 1";
                 $ShowResult = mysqli_query($connection, $query3);
                 if (!$ShowResult) {
                     die($mag = 'Database query failed.');
@@ -46,7 +47,7 @@ if (isset($_POST['btn-login'])) {
                     case 'SUPER-ADMIN':
                         $_SESSION['user_id'] = $user_id;
                         $_SESSION['userType'] = $userType;
-                        header('Location: ./auth/super-admin/admin_dashboard.php?page=dashboard?userType=' . $userType);
+                        header('Location: ./auth/super-admin/super-admin_dashboard.php?page=dashboard?userType=' . $userType);
                         break;
                     case 'ADMIN':
                         $_SESSION['user_id'] = $user_id;
@@ -61,7 +62,7 @@ if (isset($_POST['btn-login'])) {
                     case 'PUMPER':
                         $_SESSION['user_id'] = $user_id;
                         $_SESSION['userType'] = $userType;
-                        header('Location: ../auth/pumper/admin_dashboard.php?page=dashboard?userType=' . $userType);
+                        header('Location: ../auth/pumper/super-admin_dashboard.php?page=dashboard?userType=' . $userType);
                         break;
                     default:
                         $msg .= 'Invalid user type';
