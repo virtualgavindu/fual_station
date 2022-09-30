@@ -67,17 +67,7 @@ if (isset($_POST['btn-addUser'])) {
         $msg .= 'Database query failed';
     }
 
-echo $msg;
-    //insert the data into the database
-    if (empty($msg)) {
-        $query = "INSERT INTO user (user_id,email,pwd,roleid) VALUES ('{$user_id}','{$email}','{$password}','{$roleid}')";
-        $ShowResult = mysqli_query($connection, $query);
-        if ($ShowResult) {
-            $msg .= 'User added successfully';
-        } else {
-            $msg .= 'Database query failed';
-        }
-    }
+
 
 
 
