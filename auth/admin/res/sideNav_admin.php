@@ -20,19 +20,23 @@
               
             </li>
 
-            
-            
             <li class="sidebar-item">
-              <a class="sidebar-link" href="../admin/filling_stations.php">
-                <i class="align-middle" data-feather="zap"></i>
-                <span class="align-middle">Filling station</span>
+              <a class="sidebar-link" href="../admin/users.php">
+                <i class="align-middle" data-feather="user"></i>
+                <span class="align-middle">Users</span>
               </a>
             </li>
+              <li class="sidebar-item">
+                  <a class="sidebar-link" href="../admin/filling_stations.php">
+                      <i class="align-middle" data-feather="zap"></i>
+                      <span class="align-middle">Filling station</span>
+                  </a>
+              </li>
 
             <li class="sidebar-item">
-              <a class="sidebar-link" href="../admin_dashboard.php?page=orders">
+              <a class="sidebar-link" href="../admin/fuel.php">
                 <i class="align-middle" data-feather="droplet"></i>
-                <span class="align-middle">Fual Orders</span>
+                <span class="align-middle">Fuel </span>
               </a>
             </li>
 

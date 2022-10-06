@@ -4,7 +4,7 @@ $connection = mysqli_connect(
     'localhost',
     'root',
     '',
-    'fual_satations'
+    'fuel_management'
 );
 //mysqli_connect_errno();
 //mysqli_connect_error();

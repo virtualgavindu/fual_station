@@ -1,11 +1,29 @@
 <?php session_start(); ?>
 
 <?php
+include '../../config/conn.php';
+require_once '../../res/link.php';
+require_once '../../res/add-ons.php';
+include '../../res/function.php';
+?>
+<?php
 
 if(!isset($_SESSION['user_id'])){
     header('Location: ../../login.php');
+
+}
+if ($_SESSION['userType'] != 'ADMIN') {
+    header('Location: ../../login.php');
 }
 ?>
+<?php
+
+
+
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -39,7 +57,7 @@ if(!isset($_SESSION['user_id'])){
     <div class="main">
         <nav class="navbar navbar-expand navbar-light navbar-bg">
             <?php
-            require_once('../../res/TopNav.php');
+            require_once('../admin/res/TopNav.php');
             ?>
 
         </nav>
@@ -73,12 +91,12 @@ if(!isset($_SESSION['user_id'])){
                                                     </div>
                                                 </div>
                                             </div>
-                                            <h1 class="mt-1 mb-3">2.382</h1>
+                                            <h1 class="mt-1 mb-3" id="station-count">0</h1>
                                             <div class="mb-0">
                             <span class="text-danger">
-                              <i class="mdi mdi-arrow-bottom-right"></i> -3.65%
+                              <i class="mdi mdi-arrow-bottom-right"></i>
                             </span>
-                                                <span class="text-muted">Since last week</span>
+                                                <span class="text-muted"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -125,12 +143,12 @@ if(!isset($_SESSION['user_id'])){
                                                     </div>
                                                 </div>
                                             </div>
-                                            <h1 class="mt-1 mb-3">$21.300</h1>
+                                            <h1 class="mt-1 mb-3" id="user-count">0</h1>
                                             <div class="mb-0">
                             <span class="text-success">
-                              <i class="mdi mdi-arrow-bottom-right"></i> 6.65%
+                              <i class="mdi mdi-arrow-bottom-right"></i>
                             </span>
-                                                <span class="text-muted">Since last week</span>
+                                                <span class="text-muted"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -328,6 +346,40 @@ if(!isset($_SESSION['user_id'])){
 
                 </div>
             </div>
+            <script type="text/javascript">
+                function loadDoc() {
+
+
+                    setInterval(function(){
+
+                        var xhttp = new XMLHttpRequest();
+                        xhttp.onreadystatechange = function() {
+                            if (this.readyState == 4 && this.status == 200) {
+                                document.getElementById("user-count").innerHTML = this.responseText;
+                            }
+                        };
+                        xhttp.open("GET", "../../code/userCount.php", true);
+                        xhttp.send();
+
+                    },1000);
+
+                    setInterval(function(){
+
+                        var xhttp = new XMLHttpRequest();
+                        xhttp.onreadystatechange = function() {
+                            if (this.readyState == 4 && this.status == 200) {
+                                document.getElementById("station-count").innerHTML = this.responseText;
+                            }
+                        };
+                        xhttp.open("GET", "../../code/StationCount.php", true);
+                        xhttp.send();
+
+                    },1000);
+
+
+                }
+                loadDoc();
+            </script>
             <script>
                 document.addEventListener("DOMContentLoaded", function () {
                     var ctx = document

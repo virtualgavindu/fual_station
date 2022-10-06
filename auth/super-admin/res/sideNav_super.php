@@ -13,7 +13,7 @@
             
             ?>
 
-              <a class="sidebar-link" href="#">
+              <a class="sidebar-link" href="../super-admin/super-admin_dashboard.php">
                 <i class="align-middle" data-feather="sliders"></i>
                 <span class="align-middle">Dashboard</span>
               </a>
@@ -23,7 +23,7 @@
             
             
             <li class="sidebar-item">
-              <a class="sidebar-link" href="#">
+              <a class="sidebar-link" href="../super-admin/filling_stations.php">
                 <i class="align-middle" data-feather="zap"></i>
                 <span class="align-middle">Filling station</span>
               </a>

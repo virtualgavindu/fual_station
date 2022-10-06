@@ -5,6 +5,7 @@
 
 
 
+
 <?php
 if (isset($_POST['btn-login'])) {
     //Declaring variables and assign empty values
@@ -62,7 +63,7 @@ if (isset($_POST['btn-login'])) {
                     case 'PUMPER':
                         $_SESSION['user_id'] = $user_id;
                         $_SESSION['userType'] = $userType;
-                        header('Location: ../auth/pumper/super-admin_dashboard.php?page=dashboard?userType=' . $userType);
+                        header('Location:./auth/pumper/pumper.php?page=dashboard?userType=' . $userType);
                         break;
                     default:
                         $msg .= 'Invalid user type';
@@ -175,7 +176,7 @@ function input_varify($data)
                     <div class="row">
                         <div class="col-lg-10 col-xl-10 mx-auto">
 
-                            bb
+
                             <h4 class="display-4">Login</h4>
 
                             <p class="text-muted mb-4">Sign in to your account</p>

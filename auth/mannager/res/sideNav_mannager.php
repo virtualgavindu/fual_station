@@ -19,14 +19,14 @@
             </li>
 
             <li class="sidebar-item">
-              <a class="sidebar-link" href="./profile.php">
-                <i class="align-middle" data-feather="user"></i>
-                <span class="align-middle">Profile</span>
+              <a class="sidebar-link" href="./fuel_station">
+                <i class="align-middle" data-feather="droplet"></i>
+                <span class="align-middle">Fuel station</span>
               </a>
             </li>
 
             <li class="sidebar-item">
-              <a class="sidebar-link" href="../admin/blank_page.php?page=blank">
+              <a class="sidebar-link" href="./users.php">
                 <i class="align-middle" data-feather="user-plus"></i>
                 <span class="align-middle">Users</span>
               </a>

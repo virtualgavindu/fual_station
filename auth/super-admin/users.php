@@ -23,61 +23,83 @@ if ($_SESSION['userType'] != 'SUPER-ADMIN') {
 if (isset($_POST['btn-addUser'])) {
 
 
-
-
     $user_id = '';
     $email = '';
     $password = '';
     $userType = '';
     $roleid = '';
     $msg = '';
+    $msg1 = '';
+
+
     //verify the input
     $user_id = input_varify($_POST['userid']);
     $email = input_varify($_POST['email']);
     $password = input_varify($_POST['password']);
     $userType = input_varify($_POST['userType']);
-
+   // echo $userType;
+//echo "<br>";
 
     switch ($userType) {
-        case 'SUPER-ADMIN':
-            $roleid = 3;
-            break;
-        case 'ADMIN':
+        case 'Admin':
             $roleid = 0;
             break;
-        case 'MANAGER':
+        case 'Manager':
             $roleid = 1;
             break;
-        case 'PUMPER':
-            $roleid = 4;
+        case 'Pumper':
+            $roleid = 2;
             break;
-    }
 
+    }
+//echo $roleid;
+   // echo "<br>";
     //check if the email is already in the database
 
     $query = "SELECT * FROM user WHERE email = '{$email}' LIMIT 1";
     $ShowResult = mysqli_query($connection, $query);
+   // echo mysqli_num_rows($ShowResult);
     $data = mysqli_fetch_array($ShowResult);
-    if ($ShowResult) {
+    $query2 = "SELECT * FROM user WHERE user_id = '{$user_id}' LIMIT 1";
+    $ShowResult2 = mysqli_query($connection, $query2);
+    $data = mysqli_fetch_array($ShowResult2);
+    //echo "<br>";
+   // echo mysqli_num_rows($ShowResult);
+    if ($ShowResult2){
+        if (mysqli_num_rows($ShowResult2) == 1) {
+            $msg .= 'User already exist';
+        }
+    elseif ($ShowResult) {
         if (mysqli_num_rows($ShowResult) == 1) {
             $msg .= 'Email already exist ';
+        } else {
+
+
+            $query = "INSERT INTO user (user_id,email,pwd,roleid) VALUES ('{$user_id}','{$email}','{$password}','{$roleid}')";
+            $query2 = "INSERT INTO login_record (user_id,NotificationMessage) VALUES ('{$user_id}','Welcome to the system')";
+            $ShowResult = mysqli_query($connection, $query2);
+            $ShowResult = mysqli_query($connection, $query);
+            if ($ShowResult) {
+                $query3="INSERT INTO user_status (user_id,Status) VALUES ('{$user_id}','Active')";
+                $ShowResult = mysqli_query($connection, $query3);
+
+                $msg1 .= 'User added successfully';
+
+                //echo $msg;
+            } else {
+                $msg .= 'User not added';
+                //  echo $msg;
+            }
 
         }
-    } else {
+
+    }
+    else {
         $msg .= 'Database query failed';
     }
 
 
-
-
-
-
-
-
-
-
-
-}
+}}
 function input_varify($data)
 {
     //Remove empty spece from user input
@@ -123,7 +145,7 @@ function input_varify($data)
     <div class="main">
         <nav class="navbar navbar-expand navbar-light navbar-bg">
             <?php
-            require_once('../../res/TopNav.php');
+            require_once('../super-admin/res/TopNav.php');
             ?>
 
         </nav>
@@ -237,6 +259,8 @@ function input_varify($data)
                                                     </button>
                                                     <?php if (!empty($msg)) {
                                                         echo "<script>swal('Error!', '$msg', 'error');</script>";
+                                                    }elseif (!empty($msg1)){
+                                                        echo "<script>swal('Success!', '$msg1', 'success');</script>";
                                                     } ?>
                                                 </form>
 
