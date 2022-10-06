@@ -1,10 +1,56 @@
 <?php session_start(); ?>
-
+<?php
+include '../../config/conn.php';
+require_once '../../res/link.php';
+require_once '../../res/add-ons.php';
+include '../../res/function.php';
+?>
 <?php
 if(!isset($_SESSION['user_id'])){
     header('Location: ../../login.php');
 }
+if($_SESSION['userType'] != 'MANAGER'){
+    header('Location: ../../login.php');
+}
+
 ?>
+
+<?php
+$manager_id = $_SESSION['user_id'];
+$sql="SELECT fuel_station.manager_id, fuel_station.station_id,fuel_stock.fuel_id,fuel_stock.stock,fuel_stock.update_time FROM fuel_station INNER JOIN fuel_stock ON fuel_station.station_id=fuel_stock.station_id WHERE fuel_station.manager_id='{$manager_id}' AND fuel_stock.fuel_id=1";
+$sql1="SELECT fuel_station.manager_id, fuel_station.station_id,fuel_stock.fuel_id,fuel_stock.stock,fuel_stock.update_time FROM fuel_station INNER JOIN fuel_stock ON fuel_station.station_id=fuel_stock.station_id WHERE fuel_station.manager_id='{$manager_id}' AND fuel_stock.fuel_id=2";
+$sql2="SELECT fuel_station.manager_id, fuel_station.station_id,fuel_stock.fuel_id,fuel_stock.stock,fuel_stock.update_time FROM fuel_station INNER JOIN fuel_stock ON fuel_station.station_id=fuel_stock.station_id WHERE fuel_station.manager_id='{$manager_id}' AND fuel_stock.fuel_id=3";
+$sql3="SELECT fuel_station.manager_id, fuel_station.station_id,fuel_stock.fuel_id,fuel_stock.stock,fuel_stock.update_time FROM fuel_station INNER JOIN fuel_stock ON fuel_station.station_id=fuel_stock.station_id WHERE fuel_station.manager_id='{$manager_id}' AND fuel_stock.fuel_id=4";
+$sql4="SELECT fuel_station.manager_id, fuel_station.station_id,fuel_stock.fuel_id,fuel_stock.stock,fuel_stock.update_time FROM fuel_station INNER JOIN fuel_stock ON fuel_station.station_id=fuel_stock.station_id WHERE fuel_station.manager_id='{$manager_id}' AND fuel_stock.fuel_id=5";
+
+$result = mysqli_query($connection,$sql);
+$result1 = mysqli_query($connection,$sql1);
+$result2 = mysqli_query($connection,$sql2);
+$result3 = mysqli_query($connection,$sql3);
+$result4 = mysqli_query($connection,$sql4);
+
+$data=mysqli_fetch_array($result);
+$data1=mysqli_fetch_array($result1);
+$data2=mysqli_fetch_array($result2);
+$data3=mysqli_fetch_array($result3);
+$data4=mysqli_fetch_array($result4);
+
+$petrol92= $data['stock'];
+$petrol95= $data1['stock'];
+$diesel= $data2['stock'];
+$Kerosene= $data3['stock'];
+$superDiesel= $data4['stock'];
+
+
+
+
+?>
+
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -39,7 +85,7 @@ if(!isset($_SESSION['user_id'])){
     <div class="main">
       <nav class="navbar navbar-expand navbar-light navbar-bg">
         <?php
-        require_once('../../res/TopNav.php');
+        require_once('../mannager/res/TopNav.php');
         ?>
 
       </nav>
@@ -172,7 +218,7 @@ if(!isset($_SESSION['user_id'])){
                           </div>
                           <div class="card-body py-3">
                               <div class="chart chart-sm">
-                                  <canvas id="chartjs-dashboard-line"></canvas>
+                                  <canvas id="chartjs-pie"></canvas>
                               </div>
                           </div>
                       </div>
@@ -336,84 +382,29 @@ if(!isset($_SESSION['user_id'])){
                   </div>
               </div>
           </div>
+
           <script>
               document.addEventListener("DOMContentLoaded", function () {
-                  var ctx = document
-                      .getElementById("chartjs-dashboard-line")
-                      .getContext("2d");
-                  var gradient = ctx.createLinearGradient(0, 0, 0, 225);
-                  gradient.addColorStop(0, "rgba(215, 227, 244, 1)");
-                  gradient.addColorStop(1, "rgba(215, 227, 244, 0)");
-                  // Line chart
-                  new Chart(document.getElementById("chartjs-dashboard-line"), {
-                      type: "line",
+                  new Chart(document.getElementById("chartjs-pie"), {
+                      type: "pie",
                       data: {
-                          labels: [
-                              "Jan",
-                              "Feb",
-                              "Mar",
-                              "Apr",
-                              "May",
-                              "Jun",
-                              "Jul",
-                              "Aug",
-                              "Sep",
-                              "Oct",
-                              "Nov",
-                              "Dec",
-                          ],
-                          datasets: [
-                              {
-                                  label: "Sales ($)",
-                                  fill: true,
-                                  backgroundColor: gradient,
-                                  borderColor: window.theme.primary,
-                                  data: [
-                                      2115, 1562, 1584, 1892, 1587, 1923, 2566, 2448, 2805, 3438,
-                                      2917, 3327,
-                                  ],
-                              },
-                          ],
+                          labels: ["octane-92 Petrol", "octane-95 Petrol", "Diesel", "Super-Diesel","kerosene"],
+                          datasets: [{
+                              data: [<?php echo $petrol92; ?>,<?php echo $petrol95; ?>,<?php echo $diesel; ?>,<?php echo $superDiesel; ?>,<?php echo $Kerosene ;  ?>],
+                              backgroundColor: [
+                                  window.theme.primary,
+                                  window.theme.success,
+                                  window.theme.warning,
+                                    window.theme.danger,
+                                  "#dee2e6"
+                              ],
+                              borderColor: "transparent"
+                          }]
                       },
                       options: {
                           maintainAspectRatio: false,
-                          legend: {
-                              display: false,
-                          },
-                          tooltips: {
-                              intersect: false,
-                          },
-                          hover: {
-                              intersect: true,
-                          },
-                          plugins: {
-                              filler: {
-                                  propagate: false,
-                              },
-                          },
-                          scales: {
-                              xAxes: [
-                                  {
-                                      reverse: true,
-                                      gridLines: {
-                                          color: "rgba(0,0,0,0.0)",
-                                      },
-                                  },
-                              ],
-                              yAxes: [
-                                  {
-                                      ticks: {
-                                          stepSize: 1000,
-                                      },
-                                      display: true,
-                                      borderDash: [3, 3],
-                                      gridLines: {
-                                          color: "rgba(0,0,0,0.0)",
-                                      },
-                                  },
-                              ],
-                          },
-                      },
+                          cutoutPercentage: 0,
+                      }
                   });
               });
           </script>

@@ -4,6 +4,9 @@
 if(!isset($_SESSION['user_id'])){
     header('Location: ../../login.php');
 }
+if($_SESSION['userType'] != 'SUPER-ADMIN'){
+    header('Location: ../../login.php');
+}
 ?>
 
 <!DOCTYPE html>
@@ -29,7 +32,7 @@ if(!isset($_SESSION['user_id'])){
     <!-- Sidenav -->
 
     <?php
-    require_once('../admin/res/sideNav_admin.php');
+    require_once('../super-admin/res/sideNav_super.php');
     ?>
 
     <!-- END Sidenav -->
@@ -38,7 +41,7 @@ if(!isset($_SESSION['user_id'])){
     <div class="main">
         <nav class="navbar navbar-expand navbar-light navbar-bg">
             <?php
-            require_once('../../res/TopNav.php');
+            require_once('../super-admin/res/TopNav.php');
             ?>
 
         </nav>
@@ -278,7 +281,7 @@ if(!isset($_SESSION['user_id'])){
                                                             <div class="mb-3 col-md-4">
                                                                 <label class="form-label" for="inputState">State</label>
                                                                 <select id="inputState" class="form-control">
-                                                                    <option selected=" ">Colombo</option>
+                                                                    <option selected="">Colombo</option>
                                                                     <option>Gampaha</option>
                                                                     <option>Kaluthara</option>
                                                                     <option>Monaragama</option>
